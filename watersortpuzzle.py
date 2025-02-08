@@ -1,5 +1,6 @@
 from enum import Enum
 import random
+# import tkinter as tk
 
 class Liquid(Enum):
     BLUE = "B"
@@ -12,9 +13,18 @@ class Tube:
     def __init__(self, liquids: list[Liquid]):
         self.liquids = liquids
 
+    def pop(self):
+        return self.liquids.pop()
+    
+    def push(self, liquid:Liquid):
+        self.liquids.append(liquid)
+
     def top(self):
         if not self.liquids: return None
         return self.liquids[-1]
+
+    def space(self):
+        return Tube.max - len(self.liquids)
 
     def __str__(self):
         s = ""
@@ -23,37 +33,37 @@ class Tube:
         s += "_ " * (Tube.max - len(self.liquids))
         return s
 
-def pour(giving: Tube, recieving: Tube):
-        while giving.top() and (giving.top() == recieving.top() or not recieving.top()):
-            if len(recieving.liquids) < Tube.max:
-                recieving.liquids.append(giving.liquids.pop(-1))
-            else:
-                break
+def pour(giving: Tube, receiving: Tube):
+    while giving.top() and (giving.top() == receiving.top() or not receiving.top()):
+        if receiving.space():
+            receiving.push(giving.pop())
+        else:
+            break
 
-def minipour(giving: Tube, recieving: Tube):
-    #pour 1 liquid
-    pass
-
-#tube1 = Tube([Liquid.BLUE, Liquid.RED])
-#tube2 = Tube([Liquid.RED, Liquid.RED, Liquid.RED])
-
-#print(tube1)
-#print(tube2)
-#print("pouring 1 into 2")
-#pour(tube2, tube1)
-#print(tube1)
-#print(tube2)
+def minipour(giving: Tube, receiving: Tube):
+    if giving.top() and receiving.space():
+        print(f"{giving} -> {receiving}")
+        receiving.push(giving.pop())
 
 tubes = []
-for liquid in Liquid:
-    tubes.append(Tube([liquid,]*Tube.max))
-tubes.append(Tube([]))
-tubes.append(Tube([]))
-tubes.append(Tube([]))
-for tube in tubes:
-    print(tube)
-#for _ in range(999):
-#    pour(random.choice(tubes), random.choice(tubes))
-minipour(tubes[1], tubes[4])
-for tube in tubes:
-    print(tube)
+
+def printTubes():
+    print()
+    for tube in tubes:
+        print(tube)
+    print()
+
+def init():
+    for liquid in Liquid:
+        tubes.append(Tube([liquid,]*Tube.max))
+    for _ in range(1):
+        tubes.append(Tube([]))
+    printTubes()
+
+def scramble():
+    for _ in range(30):
+        minipour(random.choice(tubes), random.choice(tubes))
+    printTubes()
+
+init()
+scramble()
