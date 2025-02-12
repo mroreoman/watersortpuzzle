@@ -75,13 +75,7 @@ def minipour(giving: Tube, receiving: Tube):
         receiving.push(giving.pop())
 
 tubes:list[Tube] = []
-selected_tube:Tube = None
-
-root = tk.Tk()
-root.title("water sort")
-
-main = tk.Frame()
-main.pack(padx=3, pady=3)
+# selected_tube:Tube = None
 
 def print_tubes():
     print()
@@ -89,73 +83,96 @@ def print_tubes():
         print(f"{i+1}: {tube}")
     print()
 
-def select(tube:Tube):
-    global selected_tube
-    print("selected " + str(tube))
-    tube.frame.config(relief=tk.RAISED)
-    selected_tube = tube
-
-def deselect():
-    global selected_tube
-    print("deselected " + str(selected_tube))
-    selected_tube.frame.config(relief=tk.FLAT)
-    selected_tube = None
-
-def click(tube:Tube):
-    print(f"clicked {tube}")
-    if not selected_tube:
-        if tube.top(): # tube isn't empty
-            select(tube)
-    else:
-        if (not tube.top()) or (selected_tube.top() == tube.top()): # can pour selected into tube
-            pour(selected_tube, tube)
-            deselect(selected_tube)
-        else:
-            select(tube)
-
-def init():
-    for liquid in Liquid:
-        tube = Tube([liquid,]*Tube.max)
-        tubes.append(tube)
-    for _ in range(1):
-        tubes.append(Tube([]))
-    for tube in tubes:
-        tube.button.config(command=lambda:select(tube)) # this is doing weird weird things
-    print_tubes()
-
-def scramble():
-    for _ in range(30):
-        minipour(random.choice(tubes), random.choice(tubes))
-    print_tubes()
-
 def solved():
     for tube in tubes:
         if not tube.solved():
             return False
     return True
 
-init()
-scramble()
-main.mainloop()
+# def select(tube:Tube):
+#     global selected_tube
+#     print("selected " + str(tube))
+#     tube.frame.config(relief=tk.RAISED)
+#     selected_tube = tube
 
-while False:
-    giving = input("giving: ").lower().strip()
-    try:
-        giving = tubes[int(giving)-1]
-    except:
-        break
+# def deselect():
+#     global selected_tube
+#     print("deselected " + str(selected_tube))
+#     selected_tube.frame.config(relief=tk.FLAT)
+#     selected_tube = None
 
-    receiving = input("receiving: ").lower().strip()
-    try:
-        receiving = tubes[int(receiving)-1]
-    except:
-        break
+# def click(tube:Tube):
+#     print(f"clicked {tube}")
+#     if not selected_tube:
+#         if tube.top(): # tube isn't empty
+#             select(tube)
+#     else:
+#         if (not tube.top()) or (selected_tube.top() == tube.top()): # can pour selected into tube
+#             pour(selected_tube, tube)
+#             deselect(selected_tube)
+#         else:
+#             select(tube)
 
-    print(f"{giving} -> {receiving}")
-    pour(giving, receiving)
-    
-    if solved():
+def test(num):
+    print(num)
+
+def play():
+    while True:
+        giving = input("giving: ").lower().strip()
+        try:
+            giving = tubes[int(giving)-1]
+        except:
+            break
+
+        receiving = input("receiving: ").lower().strip()
+        try:
+            receiving = tubes[int(receiving)-1]
+        except:
+            break
+
+        print(f"{giving} -> {receiving}")
+        pour(giving, receiving)
+        
+        if solved():
+            print("game finished!")
+            break
+
         print_tubes()
-        break
 
+def clear():
+    for tube in tubes:
+        tube.frame.destroy()
+    tubes.clear()
+
+def init():
+    clear()
+
+    for liquid in Liquid:
+        tube = Tube([liquid,]*Tube.max)
+        tubes.append(tube)
+    for _ in range(1):
+        tubes.append(Tube([]))
+    
+    # for i in range(len(tubes)):
+    #     t = lambda:test(i)
+    #     t()
+    #     tube.button.config(command=lambda:test(i)) # this is doing weird weird things
+    
+    for _ in range(30):
+        minipour(random.choice(tubes), random.choice(tubes))
+    
     print_tubes()
+
+    play()
+
+root = tk.Tk()
+root.title("water sort")
+
+main = tk.Frame()
+main.pack(padx=3, pady=3)
+
+start = tk.Button(main, text="new game", command=init)
+start.pack(side = tk.BOTTOM)
+
+# init()
+root.mainloop()
