@@ -25,6 +25,19 @@ class Tube:
 
     def space(self):
         return Tube.max - len(self.liquids)
+    
+    def solved(self):
+        if not self.liquids:
+            return True
+        
+        if len(self.liquids) != Tube.max:
+            return False
+
+        color = self.liquids[0]
+        for liquid in self.liquids:
+            if liquid != color:
+                return False
+        return True
 
     def __str__(self):
         s = ""
@@ -42,15 +55,15 @@ def pour(giving: Tube, receiving: Tube):
 
 def minipour(giving: Tube, receiving: Tube):
     if giving.top() and receiving.space():
-        print(f"{giving} -> {receiving}")
+        # print(f"{giving} -> {receiving}")
         receiving.push(giving.pop())
 
 tubes = []
 
 def printTubes():
     print()
-    for tube in tubes:
-        print(tube)
+    for i, tube in enumerate(tubes):
+        print(f"{i+1}: {tube}")
     print()
 
 def init():
@@ -65,5 +78,34 @@ def scramble():
         minipour(random.choice(tubes), random.choice(tubes))
     printTubes()
 
+def solved():
+    for tube in tubes:
+        if not tube.solved():
+            return False
+    return True
+
 init()
 scramble()
+
+while True:
+    giving = input("giving: ").lower().strip()
+    try:
+        giving = tubes[int(giving)-1]
+    except:
+        break
+
+    receiving = input("receiving: ").lower().strip()
+    try:
+        receiving = tubes[int(receiving)-1]
+    except:
+        break
+
+    print(f"{giving} -> {receiving}")
+    pour(giving, receiving)
+    
+    if solved():
+        break
+
+    printTubes()
+
+printTubes()
