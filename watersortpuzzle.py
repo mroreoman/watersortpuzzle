@@ -127,6 +127,7 @@ def clear():
 
 def init():
     clear()
+    print(tubes)
 
     for liquid in Liquid:
         tube = Tube([liquid,]*Tube.max)
@@ -144,7 +145,7 @@ def init():
 
 root = tk.Tk()
 root.title("water sort")
-root.geometry("400x400")
+root.tk.call('tk', 'scaling', 2.5)
 
 main = tk.Frame()
 main.pack(padx=3, pady=3)

@@ -1,0 +1,139 @@
+PS C:\Users\830ar\Documents\programming\watersortpuzzle> & C:/Users/830ar/AppData/Local/Programs/Python/Python312/python.exe c:/Users/830ar/Documents/programming/watersortpuzzle/watersortpuzzle.py
+
+1: R R R _ 
+2: O O O P
+3: Y Y Y _
+4: G G _ _
+5: C C C G
+6: B B B C
+7: P P P B
+8: O G Y R
+
+clicked C C C G 
+selected C C C G 
+clicked G G _ _ 
+deselected C C C _ 
+clicked B B B C 
+selected B B B C 
+clicked C C C _ 
+deselected B B B _ 
+clicked P P P B 
+selected P P P B 
+clicked B B B _ 
+deselected P P P _ 
+clicked O O O P 
+selected O O O P 
+clicked P P P _ 
+deselected O O O _ 
+clicked O G Y R 
+selected O G Y R 
+clicked R R R _ 
+deselected O G Y _ 
+clicked O G Y _ 
+selected O G Y _ 
+clicked Y Y Y _ 
+deselected O G _ _ 
+clicked O G _ _ 
+selected O G _ _ 
+
+1: R R R B 
+2: O O O _
+3: Y Y _ _
+4: G G C _
+5: C C G G
+6: B B B P
+7: P P P Y
+8: Y O R C
+
+clicked Y O R C 
+deselected O G _ _ 
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File "C:\Users\830ar\AppData\Local\Programs\Python\Python312\Lib\tkinter\__init__.py", line 1967, in __call__
+    return self.func(*args)
+           ^^^^^^^^^^^^^^^^
+  File "c:\Users\830ar\Documents\programming\watersortpuzzle\watersortpuzzle.py", line 138, in <lambda>
+    tube.button.config(command = (lambda x: (lambda: click(x)))(tube))
+                                                     ^^^^^^^^
+  File "c:\Users\830ar\Documents\programming\watersortpuzzle\watersortpuzzle.py", line 120, in click
+    deselect()
+  File "c:\Users\830ar\Documents\programming\watersortpuzzle\watersortpuzzle.py", line 105, in deselect
+    selected_tube.button.config(relief=tk.RAISED)
+  File "C:\Users\830ar\AppData\Local\Programs\Python\Python312\Lib\tkinter\__init__.py", line 1721, in configure
+    return self._configure('configure', cnf, kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\830ar\AppData\Local\Programs\Python\Python312\Lib\tkinter\__init__.py", line 1711, in _configure
+    self.tk.call(_flatten((self._w, cmd)) + self._options(cnf))
+_tkinter.TclError: invalid command name ".!frame.!frame8.!button"
+
+1: R R R R 
+2: O O G _
+3: Y Y Y O
+4: G G G C
+5: C C B _
+6: B B _ _
+7: P P P Y
+8: P O B C
+
+clicked P P P Y 
+deselected O G _ _ 
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File "C:\Users\830ar\AppData\Local\Programs\Python\Python312\Lib\tkinter\__init__.py", line 1967, in __call__
+    return self.func(*args)
+           ^^^^^^^^^^^^^^^^
+  File "c:\Users\830ar\Documents\programming\watersortpuzzle\watersortpuzzle.py", line 138, in <lambda>
+    tube.button.config(command = (lambda x: (lambda: click(x)))(tube))
+                                                     ^^^^^^^^
+  File "c:\Users\830ar\Documents\programming\watersortpuzzle\watersortpuzzle.py", line 120, in click
+    deselect()
+  File "c:\Users\830ar\Documents\programming\watersortpuzzle\watersortpuzzle.py", line 105, in deselect
+    selected_tube.button.config(relief=tk.RAISED)
+  File "C:\Users\830ar\AppData\Local\Programs\Python\Python312\Lib\tkinter\__init__.py", line 1721, in configure
+    return self._configure('configure', cnf, kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\830ar\AppData\Local\Programs\Python\Python312\Lib\tkinter\__init__.py", line 1711, in _configure
+    self.tk.call(_flatten((self._w, cmd)) + self._options(cnf))
+_tkinter.TclError: invalid command name ".!frame.!frame8.!button"
+clicked P P P Y 
+deselected O G _ _ 
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File "C:\Users\830ar\AppData\Local\Programs\Python\Python312\Lib\tkinter\__init__.py", line 1967, in __call__
+    return self.func(*args)
+           ^^^^^^^^^^^^^^^^
+  File "c:\Users\830ar\Documents\programming\watersortpuzzle\watersortpuzzle.py", line 138, in <lambda>
+    tube.button.config(command = (lambda x: (lambda: click(x)))(tube))
+                                                     ^^^^^^^^
+  File "c:\Users\830ar\Documents\programming\watersortpuzzle\watersortpuzzle.py", line 120, in click
+    deselect()
+  File "c:\Users\830ar\Documents\programming\watersortpuzzle\watersortpuzzle.py", line 105, in deselect
+    selected_tube.button.config(relief=tk.RAISED)
+  File "C:\Users\830ar\AppData\Local\Programs\Python\Python312\Lib\tkinter\__init__.py", line 1721, in configure
+    return self._configure('configure', cnf, kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\830ar\AppData\Local\Programs\Python\Python312\Lib\tkinter\__init__.py", line 1711, in _configure
+    self.tk.call(_flatten((self._w, cmd)) + self._options(cnf))
+_tkinter.TclError: invalid command name ".!frame.!frame8.!button"
+clicked B B _ _ 
+deselected O G _ _ 
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File "C:\Users\830ar\AppData\Local\Programs\Python\Python312\Lib\tkinter\__init__.py", line 1967, in __call__
+    return self.func(*args)
+           ^^^^^^^^^^^^^^^^
+  File "c:\Users\830ar\Documents\programming\watersortpuzzle\watersortpuzzle.py", line 138, in <lambda>
+    tube.button.config(command = (lambda x: (lambda: click(x)))(tube))
+                                                     ^^^^^^^^
+  File "c:\Users\830ar\Documents\programming\watersortpuzzle\watersortpuzzle.py", line 120, in click
+    deselect()
+  File "c:\Users\830ar\Documents\programming\watersortpuzzle\watersortpuzzle.py", line 105, in deselect
+    selected_tube.button.config(relief=tk.RAISED)
+  File "C:\Users\830ar\AppData\Local\Programs\Python\Python312\Lib\tkinter\__init__.py", line 1721, in configure
+    return self._configure('configure', cnf, kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\830ar\AppData\Local\Programs\Python\Python312\Lib\tkinter\__init__.py", line 1711, in _configure
+    self.tk.call(_flatten((self._w, cmd)) + self._options(cnf))
+_tkinter.TclError: invalid command name ".!frame.!frame8.!button"
+
+(also just had it crash/freeze (program not responding) after clicking a button, either tkinter crashed or program got like stuck in a loop)
