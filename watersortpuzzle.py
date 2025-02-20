@@ -3,9 +3,13 @@ import random
 import tkinter as tk
 
 class Liquid(Enum):
-    BLUE = "B"
     RED = "R"
+    ORANGE = "O"
+    YELLOW = "Y"
     GREEN = "G"
+    CYAN = "C"
+    BLUE = "B"
+    PURPLE = "P"
 
 class Tube:
     max = 4
@@ -75,7 +79,7 @@ def minipour(giving: Tube, receiving: Tube):
         receiving.push(giving.pop())
 
 tubes:list[Tube] = []
-# selected_tube:Tube = None
+selected_tube:Tube = None
 
 def print_tubes():
     print()
@@ -89,55 +93,32 @@ def solved():
             return False
     return True
 
-# def select(tube:Tube):
-#     global selected_tube
-#     print("selected " + str(tube))
-#     tube.frame.config(relief=tk.RAISED)
-#     selected_tube = tube
+def select(tube:Tube):
+    global selected_tube
+    print("selected " + str(tube))
+    tube.button.config(relief=tk.SUNKEN)
+    selected_tube = tube
 
-# def deselect():
-#     global selected_tube
-#     print("deselected " + str(selected_tube))
-#     selected_tube.frame.config(relief=tk.FLAT)
-#     selected_tube = None
+def deselect():
+    global selected_tube
+    print("deselected " + str(selected_tube))
+    selected_tube.button.config(relief=tk.RAISED)
+    selected_tube = None
 
-# def click(tube:Tube):
-#     print(f"clicked {tube}")
-#     if not selected_tube:
-#         if tube.top(): # tube isn't empty
-#             select(tube)
-#     else:
-#         if (not tube.top()) or (selected_tube.top() == tube.top()): # can pour selected into tube
-#             pour(selected_tube, tube)
-#             deselect(selected_tube)
-#         else:
-#             select(tube)
-
-def test(num):
-    print(num)
-
-def play():
-    while True:
-        giving = input("giving: ").lower().strip()
-        try:
-            giving = tubes[int(giving)-1]
-        except:
-            break
-
-        receiving = input("receiving: ").lower().strip()
-        try:
-            receiving = tubes[int(receiving)-1]
-        except:
-            break
-
-        print(f"{giving} -> {receiving}")
-        pour(giving, receiving)
-        
-        if solved():
-            print("game finished!")
-            break
-
-        print_tubes()
+def click(tube:Tube):
+    print(f"clicked {tube}")
+    if not selected_tube:
+        if tube.top(): # tube isn't empty
+            select(tube)
+    else:
+        if (not tube.top()) or (selected_tube.top() == tube.top()): # can pour selected into tube
+            pour(selected_tube, tube)
+            deselect()
+            if solved():
+                print("board solved")
+        else:
+            deselect()
+            select(tube)
 
 def clear():
     for tube in tubes:
@@ -153,20 +134,17 @@ def init():
     for _ in range(1):
         tubes.append(Tube([]))
     
-    # for i in range(len(tubes)):
-    #     t = lambda:test(i)
-    #     t()
-    #     tube.button.config(command=lambda:test(i)) # this is doing weird weird things
+    for tube in tubes:
+        tube.button.config(command = (lambda x: (lambda: click(x)))(tube))
     
-    for _ in range(30):
+    for _ in range(100):
         minipour(random.choice(tubes), random.choice(tubes))
     
     print_tubes()
 
-    play()
-
 root = tk.Tk()
 root.title("water sort")
+root.geometry("400x400")
 
 main = tk.Frame()
 main.pack(padx=3, pady=3)
@@ -174,5 +152,4 @@ main.pack(padx=3, pady=3)
 start = tk.Button(main, text="new game", command=init)
 start.pack(side = tk.BOTTOM)
 
-# init()
 root.mainloop()
