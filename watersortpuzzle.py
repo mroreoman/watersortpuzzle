@@ -68,6 +68,8 @@ class Tube:
         return s
 
 def pour(giving: Tube, receiving: Tube):
+    if giving is receiving:
+        return
     while giving.top() and (giving.top() == receiving.top() or not receiving.top()):
         if receiving.space():
             receiving.push(giving.pop())
