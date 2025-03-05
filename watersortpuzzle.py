@@ -20,7 +20,7 @@ class Tube:
     
     def __init__(self, liquids: list[Liquid]):
         self.liquids = liquids
-        self.frame = tk.Frame(main, padx=3)
+        self.frame = tk.Frame(tube_frame, padx=3)
         self.frame.pack(side=tk.LEFT)
         self.button = tk.Button(self.frame, width=2)
         self.button.pack(side=tk.BOTTOM)
@@ -71,12 +71,32 @@ class Tube:
         s += "_ " * (Tube.max - len(self.liquids))
         return s
 
+class PrevMove:
+    def start_move(giving, receiving):
+        PrevMove.giving = giving
+        PrevMove.receiving = receiving
+        PrevMove.length = 0
+        PrevMove.text = f"{giving} -> {receiving}"
+    
+    def clear():
+        PrevMove.giving = None
+        PrevMove.receiving = None
+        PrevMove.length = 0
+        PrevMove.text = None
+
+tubes:list[Tube] = []
+selected_tube:Tube = None
+board_start:list[list[Liquid]] = []
+
 def pour(giving: Tube, receiving: Tube):
-    print(f"{giving} -> {receiving}")
     if giving is receiving:
         return
+    PrevMove.clear()
+    print(f"{giving} -> {receiving}")
+    PrevMove.start_move(giving, receiving)
     while giving.top() and (giving.top() == receiving.top() or not receiving.top()):
         if receiving.space():
+            PrevMove.length += 1
             receiving.push(giving.pop())
         else:
             break
@@ -87,10 +107,8 @@ def minipour(giving: Tube, receiving: Tube):
         if giving.top() is not receiving.top():
             giving.push(receiving.pop())
         else:
-            print(f"{giving} -> {receiving}")
-
-tubes:list[Tube] = []
-selected_tube:Tube = None
+            # print(f"{giving} -> {receiving}")
+            pass
 
 def print_tubes():
     print()
@@ -143,6 +161,7 @@ def clear():
 
 def init():
     clear()
+    message.config(text="generating board")
     liquids = list(Liquid)
     if NUM_TUBES <= 4:
         for _ in range(NUM_TUBES-1):
@@ -157,23 +176,54 @@ def init():
     for tube in tubes:
         tube.button.config(command = (lambda x: (lambda: click(x)))(tube))
     
-    for _ in range(100):
+    for _ in range(9999):
         minipour(random.choice(tubes), random.choice(tubes))
     
+    message.config(text="")
+    global board_start
+    board_start.clear()
+    for tube in tubes:
+        tube_start = []
+        for liquid in tube.liquids:
+            tube_start.append(liquid)
+        board_start.append(tube_start)
     print_tubes()
+    print("\n".join(map(str, board_start)))
+
+def reset():
+    print("resetting board")
+    clear()
+    for tube_start in board_start:
+        tubes.append(Tube(tube_start))
+    for tube in tubes:
+        tube.button.config(command = (lambda x: (lambda: click(x)))(tube))
+
+def undo():
+    if not PrevMove.giving or not PrevMove.receiving or not PrevMove.length:
+        return
+    print("undoing " + PrevMove.text)
+    for _ in range(PrevMove.length):
+        minipour(PrevMove.receiving, PrevMove.giving)
+    PrevMove.clear()
 
 root = tk.Tk()
 root.title("water sort")
 root.minsize(400,200)
 root.tk.call('tk', 'scaling', 2.5)
 
-main = tk.Frame()
-main.pack(padx=3, pady=3)
+tube_frame = tk.Frame()
+tube_frame.pack(padx=3, pady=3)
 
-start = tk.Button(main, text="new game", command=init)
-start.pack(side = tk.BOTTOM)
+buttons = tk.Frame()
+buttons.pack(padx=3, pady=3)
+reset_button = tk.Button(buttons, text="reset", command=reset)
+reset_button.pack(side = tk.LEFT)
+start_button = tk.Button(buttons, text="new game", command=init)
+start_button.pack(side = tk.LEFT)
+undo_button = tk.Button(buttons, text="undo", command=undo)
+undo_button.pack(side = tk.LEFT)
 
-message = tk.Label(main, text="welcome!")
+message = tk.Label(text="welcome!")
 message.pack(side = tk.BOTTOM)
 
 root.mainloop()
