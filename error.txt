@@ -135,5 +135,3 @@ Traceback (most recent call last):
   File "C:\Users\830ar\AppData\Local\Programs\Python\Python312\Lib\tkinter\__init__.py", line 1711, in _configure
     self.tk.call(_flatten((self._w, cmd)) + self._options(cnf))
 _tkinter.TclError: invalid command name ".!frame.!frame8.!button"
-
-(also just had it crash/freeze (program not responding) after clicking a button, either tkinter crashed or program got like stuck in a loop)

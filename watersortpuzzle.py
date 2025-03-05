@@ -2,7 +2,7 @@ from enum import Enum
 import random
 import tkinter as tk
 
-NUM_TUBES = 4
+NUM_TUBES = 9
 if NUM_TUBES > 9:
     NUM_TUBES = 9
 
@@ -84,7 +84,10 @@ def pour(giving: Tube, receiving: Tube):
 def minipour(giving: Tube, receiving: Tube):
     if giving.top() and receiving.space():
         receiving.push(giving.pop())
-        print(f"{giving} -> {receiving}")
+        if giving.top() is not receiving.top():
+            giving.push(receiving.pop())
+        else:
+            print(f"{giving} -> {receiving}")
 
 tubes:list[Tube] = []
 selected_tube:Tube = None
@@ -154,7 +157,7 @@ def init():
     for tube in tubes:
         tube.button.config(command = (lambda x: (lambda: click(x)))(tube))
     
-    for _ in range(20):
+    for _ in range(100):
         minipour(random.choice(tubes), random.choice(tubes))
     
     print_tubes()
