@@ -135,3 +135,7 @@ Traceback (most recent call last):
   File "C:\Users\830ar\AppData\Local\Programs\Python\Python312\Lib\tkinter\__init__.py", line 1711, in _configure
     self.tk.call(_flatten((self._w, cmd)) + self._options(cnf))
 _tkinter.TclError: invalid command name ".!frame.!frame8.!button"
+
+// prob caused by trying to access a destroyed widget
+// RED RED _ _  -> ORANGE ORANGE RED RED counts as a pour
+// undo doesn't work eith eg. RED RED RED RED -> _ _ _ _

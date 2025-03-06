@@ -2,18 +2,21 @@ from enum import Enum
 import random
 import tkinter as tk
 
-NUM_TUBES = 9
-if NUM_TUBES > 9:
-    NUM_TUBES = 9
+NUM_TUBES = 20
 
 class Liquid(Enum):
-    RED = "R"
-    ORANGE = "O"
-    YELLOW = "Y"
-    GREEN = "G"
-    CYAN = "C"
-    BLUE = "B"
-    PURPLE = "P"
+    RED = "#FF0000"
+    GREEN = "#00FF00"
+    BLUE = "#0000FF"
+    YELLOW = "#FFFF00"
+    ORANGE = "#FF8000"
+    LIME = "#80FF00"
+    PURPLE = "#FF00FF"
+    PINK = "#FF0080"
+    MAGENTA = "#8000FF"
+    CYAN = "#00FFFF"
+    MINT = "#00FF80"
+    CORNFLOWER = "#0080FF"
 
 class Tube:
     max = 4
@@ -30,7 +33,7 @@ class Tube:
             label.pack(side=tk.BOTTOM)
             self.labels.append(label)
         for i, liquid in enumerate(self.liquids):
-            self.labels[i].config(bg=liquid.name)
+            self.labels[i].config(bg=liquid.value)
 
     def space(self):
         return Tube.max - len(self.liquids)
@@ -44,7 +47,7 @@ class Tube:
     def push(self, liquid:Liquid):
         if not self.space():
             return
-        self.labels[len(self.liquids)].config(bg=liquid.name)
+        self.labels[len(self.liquids)].config(bg=liquid.value)
         self.liquids.append(liquid)
 
     def top(self):
@@ -67,7 +70,7 @@ class Tube:
     def __str__(self):
         s = ""
         for liquid in self.liquids:
-            s += liquid.value + " "
+            s += liquid.name + " "
         s += "_ " * (Tube.max - len(self.liquids))
         return s
 
@@ -83,6 +86,9 @@ class PrevMove:
         PrevMove.receiving = None
         PrevMove.length = 0
         PrevMove.text = None
+
+if NUM_TUBES > len(list(Liquid)):
+    NUM_TUBES = len(list(Liquid))
 
 tubes:list[Tube] = []
 selected_tube:Tube = None
@@ -139,7 +145,9 @@ def finish_board():
     message.config(text="you won!")
 
 def click(tube:Tube):
-    # print(f"clicked {tube}")
+    print(f"tube: {id(tube)}")
+    print(f"button: {id(tube.button)}")
+
     if not selected_tube:
         if tube.top(): # tube isn't empty
             select(tube)
@@ -163,7 +171,8 @@ def init():
     clear()
     message.config(text="generating board")
     liquids = list(Liquid)
-    if NUM_TUBES <= 4:
+    # if NUM_TUBES <= 4:
+    if True:
         for _ in range(NUM_TUBES-1):
             tubes.append(Tube([liquids.pop(random.randint(0, len(liquids)-1)),]*Tube.max))
         tubes.append(Tube([]))
